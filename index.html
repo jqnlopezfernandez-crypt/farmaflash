@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FarmaFlash</title>
+<style>
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #10131b;
+  color: #f5f5f5;
+  padding: 24px;
+}
+main { max-width: 520px; margin: 40px auto; }
+h1 { color: #9be7c4; }
+.card {
+  background: #202635;
+  border: 1px solid #384154;
+  border-radius: 20px;
+  padding: 28px;
+  min-height: 190px;
+}
+small { color: #aab5c8; }
+#answer { display: none; margin-top: 24px; }
+button {
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 12px;
+  margin: 8px 5px 0 0;
+  cursor: pointer;
+  font-size: 15px;
+}
+.primary { background: #9be7c4; color: #14251e; }
+.secondary { background: #343e50; color: white; }
+</style>
+</head>
+<body>
+<main>
+  <h1>FarmaFlash 💊</h1>
+  <p>Repasa Farmacología a tu ritmo.</p>
+  <small id="counter"></small>
+
+  <section class="card">
+    <h2 id="question"></h2>
+    <div id="answer">
+      <hr>
+      <p id="response"></p>
+    </div>
+  </section>
+
+  <button class="primary" id="reveal">Ver respuesta</button>
+  <button class="secondary" id="next">Siguiente →</button>
+</main>
+
+<script>
+const cards = [
+  {
+    q: "¿Qué enzima inhiben los AINE clásicos?",
+    a: "Las ciclooxigenasas COX-1 y/o COX-2, reduciendo la síntesis de prostaglandinas."
+  },
+  {
+    q: "¿Cuál es el mecanismo de los beta-bloqueantes?",
+    a: "Bloquean los receptores beta-adrenérgicos y reducen los efectos de las catecolaminas."
+  },
+  {
+    q: "¿Qué hacen los inhibidores de la ECA?",
+    a: "Disminuyen la formación de angiotensina II y reducen la degradación de bradicinina."
+  }
+];
+
+let index = 0;
+
+function render() {
+  document.getElementById("question").textContent = cards[index].q;
+  document.getElementById("response").textContent = cards[index].a;
+  document.getElementById("counter").textContent =
+    `Tarjeta ${index + 1} de ${cards.length}`;
+  document.getElementById("answer").style.display = "none";
+  document.getElementById("reveal").textContent = "Ver respuesta";
+}
+
+document.getElementById("reveal").onclick = () => {
+  const answer = document.getElementById("answer");
+  const visible = answer.style.display !== "none";
+  answer.style.display = visible ? "none" : "block";
+  document.getElementById("reveal").textContent =
+    visible ? "Ver respuesta" : "Ocultar respuesta";
+};
+
+document.getElementById("next").onclick = () => {
+  index = (index + 1) % cards.length;
+  render();
+};
+
+render();
+</script>
+</body>
+</html>
